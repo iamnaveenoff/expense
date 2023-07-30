@@ -1,42 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-double safeDouble(dynamic value){
-  try{
-    return double.parse(value);
-  }catch(err){
-    return 0;
-  }
-}
-void v1(Database database) async {
-  debugPrint("Running first migration....");
-  await database.execute("CREATE TABLE payments ("
-      "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-      "title TEXT NULL, "
-      "description TEXT NULL, "
-      "account INTEGER,"
-      "category INTEGER,"
-      "amount REAL,"
-      "type TEXT,"
-      "datetime DATETIME"
-      ")");
+void v1() async {
+  // Initialize Firebase
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  await database.execute("CREATE TABLE categories ("
-      "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-      "name TEXT,"
-      "icon INTEGER,"
-      "color INTEGER,"
-      "budget REAL NULL, "
-      "type TEXT"
-      ")");
+  // Create 'payments' collection and add example document
+  await firestore.collection('payments').doc('examplePayment').set({
+    'title': 'Example Payment',
+    'description': 'This is an example payment',
+    'account': 1,
+    'category': 1,
+    'amount': 100.0,
+    'type': 'Expense',
+    'datetime': DateTime.now(),
+  });
 
-  await database.execute("CREATE TABLE accounts ("
-      "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-      "name TEXT,"
-      "holderName TEXT NULL, "
-      "accountNumber TEXT NULL, "
-      "icon INTEGER,"
-      "color INTEGER,"
-      "isDefault INTEGER"
-      ")");
+  // Create 'categories' collection and add example document
+  await firestore.collection('categories').doc('exampleCategory').set({
+    'name': 'Example Category',
+    'icon': Icons.category.codePoint,
+    'color': Colors.blue.value,
+    'budget': 1000.0,
+    'type': 'Expense',
+  });
+
+  // Create 'accounts' collection and add example document
+  await firestore.collection('accounts').doc('exampleAccount').set({
+    'name': 'Example Account',
+    'holderName': 'John Doe',
+    'accountNumber': '123456789',
+    'icon': Icons.account_balance.codePoint,
+    'color': Colors.green.value,
+    'isDefault': true,
+  });
+
+  debugPrint("First migration completed successfully.");
 }

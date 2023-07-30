@@ -11,20 +11,28 @@ class CurrencyText extends StatelessWidget {
   final TextOverflow? overflow;
   final CurrencyService currencyService = CurrencyService();
 
-  CurrencyText(this.amount, {super.key, this.style, this.overflow});
+  CurrencyText(this.amount, {Key? key, this.style, this.overflow})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(builder: (context, state) {
-      Currency? currency = currencyService.findByCode(state.currency!);
-      return Text(
-        amount == null
-            ? "${currency!.symbol} "
-            : CurrencyHelper.format(amount!,
-                name: currency?.code, symbol: currency?.symbol),
-        style: style,
-        overflow: overflow,
-      );
-    });
+    return BlocBuilder<AppCubit, AppState>(
+      builder: (context, state) {
+        String currencyCode = state.currency ??
+            'USD'; // Provide a default value if state.currency is null
+        Currency? currency = currencyService.findByCode(currencyCode);
+        return Text(
+          amount == null
+              ? "${currency?.symbol ?? ''} "
+              : CurrencyHelper.format(
+                  amount!,
+                  name: currency?.code,
+                  symbol: currency?.symbol,
+                ),
+          style: style,
+          overflow: overflow,
+        );
+      },
+    );
   }
 }

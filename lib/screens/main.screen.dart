@@ -1,3 +1,4 @@
+import 'package:expense/screens/settings/settings.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,6 +6,7 @@ import '../bloc/app_cubit.dart';
 import 'accounts/accounts.screen.dart';
 import 'categories/categories.screen.dart';
 import 'home/home.screen.dart';
+import 'onboard/onboard_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -27,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
       builder: (context, state) {
         AppCubit cubit = context.read<AppCubit>();
         if (cubit.state.currency == null || cubit.state.username == null) {
-          // return OnboardScreen();
+          return OnboardScreen();
         }
         return Scaffold(
           body: PageView(
@@ -76,8 +78,8 @@ class _MainScreenState extends State<MainScreen> {
               }
 
               if (selected == 3) {
-                // Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (context) => const SettingsScreen()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SettingsScreen()));
               }
             },
           ),
