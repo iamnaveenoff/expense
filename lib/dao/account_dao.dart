@@ -56,11 +56,23 @@ class AccountDao {
         .set(account.toJson());
   }
 
+  // Future<void> upsert(Account account) async {
+  //   if (account.id != null) {
+  //     await update(account);
+  //   } else {
+  //     await create(account);
+  //   }
+  // }
+
   Future<void> upsert(Account account) async {
-    if (account.id != null) {
-      await update(account);
+    if (account.id == null) {
+      // If the account doesn't have an ID, it's a new account, so we insert it.
+      await firestoreHelper.accountsCollection.add(account.toJson());
     } else {
-      await create(account);
+      // If the account has an ID, it already exists in the database, so we update it.
+      await firestoreHelper.accountsCollection
+          .doc(account.id)
+          .update(account.toJson());
     }
   }
 
