@@ -6,6 +6,7 @@ import '../models/category.model.dart';
 import '../models/payment.model.dart';
 import 'account_dao.dart';
 import 'category_dao.dart';
+import 'package:collection/collection.dart';
 
 class PaymentDao {
   FirestoreHelper firestoreHelper = FirestoreHelper();
@@ -35,11 +36,27 @@ class PaymentDao {
     payments = querySnapshot.docs.map((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       Payment payment = Payment.fromJson(data);
-      Account account = accounts.firstWhere((a) => a.id == data["account"]);
-      Category category =
-          categories.firstWhere((c) => c.id == data["category"]);
-      payment.account = account;
-      payment.category = category;
+
+      // Find the corresponding account
+      Account? account =
+          accounts.firstWhereOrNull((a) => a.id == data["account"]);
+      if (account != null) {
+        payment.account = account;
+      } else {
+        // Handle the case when the account is not found (optional)
+        // You can set a default account or handle this situation as needed.
+      }
+
+      // Find the corresponding category
+      Category? category =
+          categories.firstWhereOrNull((c) => c.id == data["category"]);
+      if (category != null) {
+        payment.category = category;
+      } else {
+        // Handle the case when the category is not found (optional)
+        // You can set a default category or handle this situation as needed.
+      }
+
       return payment;
     }).toList();
 

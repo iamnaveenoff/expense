@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Category {
-  int? id;
+  String? id; // Change the data type to String
   String name;
   IconData icon;
   Color color;
@@ -19,7 +19,7 @@ class Category {
   });
 
   factory Category.fromJson(Map<String, dynamic> data) => Category(
-        id: data["id"] as int?,
+        id: data["id"] as String?, // Update the data type to String
         name: data["name"] as String,
         icon: IconData(data["icon"] as int, fontFamily: 'MaterialIcons'),
         color: Color(data["color"] as int),
@@ -38,6 +38,6 @@ class Category {
   Future<void> save() async {
     CollectionReference categoriesCollection =
         FirebaseFirestore.instance.collection("categories");
-    return await categoriesCollection.doc(id.toString()).set(toJson());
+    return await categoriesCollection.doc(id).set(toJson());
   }
 }
