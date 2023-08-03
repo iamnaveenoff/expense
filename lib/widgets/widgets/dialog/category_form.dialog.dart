@@ -72,8 +72,9 @@ class _CategoryForm extends State<CategoryForm> {
                   height: 50,
                   width: 50,
                   decoration: BoxDecoration(
-                      color: _category.color,
-                      borderRadius: BorderRadius.circular(40)),
+                    color: _category.color,
+                    borderRadius: BorderRadius.circular(40),
+                  ),
                   alignment: Alignment.center,
                   child: Icon(
                     _category.icon,
@@ -84,22 +85,26 @@ class _CategoryForm extends State<CategoryForm> {
                   width: 15,
                 ),
                 Expanded(
-                    child: TextFormField(
-                  initialValue: _category.name,
-                  decoration: InputDecoration(
+                  child: TextFormField(
+                    initialValue: _category.name,
+                    decoration: InputDecoration(
                       labelText: 'Name',
                       hintText: 'Enter Category name',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 15)),
-                  onChanged: (String text) {
-                    setState(() {
-                      _category.name = text;
-                    });
-                  },
-                ))
+                        vertical: 12,
+                        horizontal: 15,
+                      ),
+                    ),
+                    onChanged: (String text) {
+                      setState(() {
+                        _category.name = text;
+                      });
+                    },
+                  ),
+                )
               ],
             ),
             Container(
@@ -118,12 +123,15 @@ class _CategoryForm extends State<CategoryForm> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 15,
+                  ),
                   prefixIcon: Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: CurrencyText(null,
-                          style: GoogleFonts.jetBrainsMono())),
+                    padding: const EdgeInsets.only(left: 15),
+                    child:
+                        CurrencyText(null, style: GoogleFonts.jetBrainsMono()),
+                  ),
                   prefixIconConstraints:
                       const BoxConstraints(minWidth: 0, minHeight: 0),
                 ),
@@ -137,81 +145,92 @@ class _CategoryForm extends State<CategoryForm> {
             const SizedBox(
               height: 20,
             ),
-            //Color picker
+            // Color picker
             SizedBox(
               height: 45,
               width: double.infinity,
               child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: Colors.primaries.length,
-                  itemBuilder: (BuildContext context, index) => Container(
-                        width: 45,
-                        height: 45,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 2.5, vertical: 2.5),
-                        child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _category.color = Colors.primaries[index];
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.primaries[index],
-                                  borderRadius: BorderRadius.circular(40),
-                                  border: Border.all(
-                                    width: 2,
-                                    color: _category.color.value ==
-                                            Colors.primaries[index].value
-                                        ? Colors.white
-                                        : Colors.transparent,
-                                  )),
-                            )),
-                      )),
+                scrollDirection: Axis.horizontal,
+                itemCount: Colors.primaries.length,
+                itemBuilder: (BuildContext context, index) => Container(
+                  width: 45,
+                  height: 45,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 2.5,
+                    vertical: 2.5,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _category.color = Colors.primaries[index];
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.primaries[index],
+                        borderRadius: BorderRadius.circular(40),
+                        border: Border.all(
+                          width: 2,
+                          color: _category.color.value ==
+                                  Colors.primaries[index].value
+                              ? Colors.white
+                              : Colors.transparent,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(
               height: 15,
             ),
 
-            //Icon picker
+            // Icon picker
             SizedBox(
               height: 45,
               width: double.infinity,
               child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: AppIcons.icons.length,
-                  itemBuilder: (BuildContext context, index) => Container(
-                      width: 45,
-                      height: 45,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 2.5, vertical: 2.5),
-                      child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _category.icon = AppIcons.icons[index];
-                            });
-                          },
-                          child: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(40),
-                                border: Border.all(
-                                    color: _category.icon ==
-                                            AppIcons.icons[index]
-                                        ? Theme.of(context).colorScheme.primary
-                                        : Colors.transparent,
-                                    width: 2)),
-                            child: Icon(
-                              AppIcons.icons[index],
-                              color: Theme.of(context).colorScheme.primary,
-                              size: 18,
-                            ),
-                          )))),
+                scrollDirection: Axis.horizontal,
+                itemCount: AppIcons.icons.length,
+                itemBuilder: (BuildContext context, index) => Container(
+                  width: 45,
+                  height: 45,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 2.5,
+                    vertical: 2.5,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _category.icon = AppIcons.icons[index];
+                      });
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(40),
+                        border: Border.all(
+                          color: _category.icon == AppIcons.icons[index]
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.transparent,
+                          width: 2,
+                        ),
+                      ),
+                      child: Icon(
+                        AppIcons.icons[index],
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

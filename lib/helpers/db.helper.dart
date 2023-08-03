@@ -12,6 +12,8 @@ class FirestoreHelper {
       FirebaseFirestore.instance.collection("categories");
   CollectionReference paymentsCollection =
       FirebaseFirestore.instance.collection("payments");
+  CollectionReference expensesCollection =
+      FirebaseFirestore.instance.collection("expenses");
 
   Future<void> resetDatabase() async {
     await paymentsCollection.get().then((querySnapshot) {
